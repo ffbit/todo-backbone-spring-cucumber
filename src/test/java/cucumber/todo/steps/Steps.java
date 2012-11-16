@@ -4,20 +4,20 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.PendingException;
-import org.apache.xpath.operations.String;
+import cucumber.todo.RunCukesTest;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class Steps {
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Given("^I am on the To-Do page$")
     public void I_am_on_the_To_Do_page() throws Throwable {
         // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+        //throw new PendingException();
     }
 
     @When("^I fill in \"([^\"]*)\" with \"([^\"]*)\"$")
