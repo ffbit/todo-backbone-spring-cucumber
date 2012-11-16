@@ -1,8 +1,11 @@
 package cucumber.todo;
 
-import cucumber.api.junit.Cucumber;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import cucumber.api.junit.Cucumber;
+
 @RunWith(Cucumber.class)
+@Category(IntegrationTest.class)
 public class RunCukesTest {
 }
