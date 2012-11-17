@@ -3,39 +3,50 @@ package cucumber.todo.steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.PendingException;
-import cucumber.todo.RunCukesTest;
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+
+import static cucumber.todo.RunCukesIT.getBaseUrl;
+import static cucumber.todo.RunCukesIT.getWebDriver;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class Steps {
+    private WebElement textField;
 
     @Given("^I am on the To-Do page$")
     public void I_am_on_the_To_Do_page() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        //throw new PendingException();
+        getWebDriver().get(getBaseUrl());
     }
 
     @When("^I fill in \"([^\"]*)\" with \"([^\"]*)\"$")
-    public void I_fill_in_with(String arg1, String arg2) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    public void I_fill_in_with(String locator, String text) throws Throwable {
+        initTestElement(locator);
+
+        assertTrue(textField.isDisplayed());
+
+        textField.sendKeys(text);
     }
 
     @When("^I press \"([^\"]*)\"$")
-    public void I_press(String arg1) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    public void I_press(String key) throws Throwable {
+        textField.sendKeys(Keys.valueOf(key.toUpperCase()));
     }
 
     @Then("^I should see \"([^\"]*)\"$")
-    public void I_should_see(String arg1) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    public void I_should_see(String text) throws Throwable {
+        assertThat(getBody().getText(), containsString(text));
+    }
+
+    private void initTestElement(String locator) {
+        textField = getWebDriver().findElement(By.id(locator));
+    }
+
+    private WebElement getBody() {
+        return getWebDriver().findElement(By.tagName("body"));
     }
 
 }

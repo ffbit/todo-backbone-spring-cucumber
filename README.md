@@ -11,4 +11,5 @@ Test Backbone.JS todo example with Cucumber and shared Spring transactions.
 
 ## How to test
 
-Will be written after achieving the goal.
+1. Install Mozilla [Firefox](http://www.mozilla.org/firefox/new/) web browser
+2. Run `mvn clean integration-test`
