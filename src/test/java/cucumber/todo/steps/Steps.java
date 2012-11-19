@@ -9,8 +9,6 @@ import org.openqa.selenium.WebElement;
 
 import static cucumber.todo.RunCukesIT.getBaseUrl;
 import static cucumber.todo.RunCukesIT.getWebDriver;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -44,6 +42,14 @@ public class Steps {
 
         assertTrue(item.isDisplayed());
         assertThat(item.getText(), is(text));
+    }
+
+    @Then("^I should see \"([^\"]*)\" in the \"([^\"]*)\" block$")
+    public void I_should_see_in_the_block(String text, String locator) throws Throwable {
+        WebElement element = getWebDriver().findElement(By.className(locator));
+
+        assertTrue(element.isDisplayed());
+        assertThat(element.getText(), is(text));
     }
 
 }

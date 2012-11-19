@@ -8,3 +8,6 @@ Feature: Managing To-Do items
     When I fill in "new-todo" with "Make all the people happy"
     And I press "Return"
     Then I should see "Make all the people happy" item
+    And I should see "1 item left" in the "todo-count" block
+
+  Scenario:
