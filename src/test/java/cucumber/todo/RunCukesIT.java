@@ -1,12 +1,13 @@
 package cucumber.todo;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.junit.Cucumber;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -20,17 +21,10 @@ public class RunCukesIT {
 
     private static Server server;
     private static Connector connector;
-    private static WebDriver webDriver;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         setUpServer();
-        setUpWebDriver();
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        setUpWebDriver();
     }
 
     private static void setUpServer() throws Exception {
@@ -49,13 +43,8 @@ public class RunCukesIT {
         connector.setPort(0);
     }
 
-    private static void setUpWebDriver() {
-        webDriver = new FirefoxDriver();
-    }
-
     @AfterClass
     public static void tearDownClass() throws Exception {
-        getWebDriver().close();
         server.stop();
     }
 
@@ -65,10 +54,6 @@ public class RunCukesIT {
 
     public static String getBaseUrl() {
         return String.format("http://localhost:%d/", getLocalPort());
-    }
-
-    public static WebDriver getWebDriver() {
-        return webDriver;
     }
 
 }

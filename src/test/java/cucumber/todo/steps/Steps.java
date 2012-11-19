@@ -1,24 +1,43 @@
 package cucumber.todo.steps;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.PendingException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import static cucumber.todo.RunCukesIT.getBaseUrl;
-import static cucumber.todo.RunCukesIT.getWebDriver;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class Steps {
+    private WebDriver webDriver;
+
     private WebElement textField;
     private WebElement item;
+
+    @Before
+    public void setUpScenario() throws Exception {
+        webDriver = new FirefoxDriver();
+    }
+
+    @After
+    public void tearDownScenario() {
+        webDriver.close();
+    }
+
+    public WebDriver getWebDriver() {
+        return webDriver;
+    }
+
 
     @Given("^I am on the To-Do page$")
     public void I_am_on_the_To_Do_page() throws Throwable {
