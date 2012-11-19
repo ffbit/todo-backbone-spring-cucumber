@@ -11,6 +11,7 @@ import static cucumber.todo.RunCukesIT.getBaseUrl;
 import static cucumber.todo.RunCukesIT.getWebDriver;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +25,7 @@ public class Steps {
 
     @When("^I fill in \"([^\"]*)\" with \"([^\"]*)\"$")
     public void I_fill_in_with(String locator, String text) throws Throwable {
-        initTestElement(locator);
+        textField = getWebDriver().findElement(By.id(locator));
 
         assertTrue(textField.isDisplayed());
 
@@ -36,17 +37,13 @@ public class Steps {
         textField.sendKeys(Keys.valueOf(key.toUpperCase()));
     }
 
-    @Then("^I should see \"([^\"]*)\"$")
+    @Then("^I should see \"([^\"]*)\" item$")
     public void I_should_see(String text) throws Throwable {
-        assertThat(getBody().getText(), containsString(text));
-    }
+        WebElement todoList = getWebDriver().findElement(By.id("todo-list"));
+        WebElement item = todoList.findElement(By.cssSelector(".view label"));
 
-    private void initTestElement(String locator) {
-        textField = getWebDriver().findElement(By.id(locator));
-    }
-
-    private WebElement getBody() {
-        return getWebDriver().findElement(By.tagName("body"));
+        assertTrue(item.isDisplayed());
+        assertThat(item.getText(), is(text));
     }
 
 }
