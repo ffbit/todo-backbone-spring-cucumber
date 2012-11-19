@@ -59,8 +59,8 @@ public class Steps {
         I_fill_in_with("new-todo", text);
     }
 
-    @When("^I \"([^\"]*)\" item as done$")
-    public void I_item_as_done(String text) throws Throwable {
+    @When("^I mark \"([^\"]*)\" item as done$")
+    public void I_mark_item_as_done(String text) throws Throwable {
         WebElement todoList = getWebDriver().findElement(By.id("todo-list"));
         item = todoList.findElement(By.cssSelector("li"));
         WebElement checkbox = item.findElement(By.cssSelector("input[type='checkbox']"));

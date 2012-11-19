@@ -12,6 +12,6 @@ Feature: Managing To-Do items
 
   Scenario: Complete a To-Do item
     Given I have created "Make all the people happy" item
-    When I "Make all the people happy" item as done
+    When I mark "Make all the people happy" item as done
     Then I should see done "Make all the people happy" item
     And I should see "0 items left" in the "todo-count" block
