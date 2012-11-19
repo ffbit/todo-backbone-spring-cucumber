@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 public class ToDoPage {
     private WebDriver driver;
@@ -46,13 +47,23 @@ public class ToDoPage {
     }
 
     public WebElement findAndClickCheckbox(String label) {
-        return findItem(label).findElement(By.id(""));
+        By by = By.cssSelector("input[type='checkbox']");
+        WebElement checkbox = findItem(label).findElement(by);
+        checkbox.click();
+        checkbox = findItem(label).findElement(by);
+
+        return checkbox;
     }
 
     public void findAndEditItemField(String oldLabel, String newLabel) {
         WebElement editItemField = findEditItemField(oldLabel);
         editItemField.clear();
         editItemField.sendKeys(newLabel);
+    }
+
+    public void performDoubleClickOnItem(String label) {
+        Actions actions = new Actions(driver);
+        actions.doubleClick(findItem(label)).build().perform();
     }
 
     private WebElement findEditItemField(String oldLabel) {

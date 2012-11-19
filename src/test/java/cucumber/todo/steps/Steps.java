@@ -7,7 +7,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.todo.ToDoPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -19,26 +18,16 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class Steps {
-    private WebDriver webDriver;
     private ToDoPage page;
-
-
-    private WebElement textField;
-    private WebElement item;
 
     @Before
     public void setUpScenario() throws Exception {
-        webDriver = new FirefoxDriver();
-        page = new ToDoPage(webDriver);
+        page = new ToDoPage(new FirefoxDriver());
     }
 
     @After
     public void tearDownScenario() {
         page.close();
-    }
-
-    public WebDriver getWebDriver() {
-        return webDriver;
     }
 
     @Given("^I am on the To-Do page$")
@@ -78,12 +67,9 @@ public class Steps {
     }
 
     @When("^I mark \"([^\"]*)\" item as done$")
-    public void I_mark_item_as_done(String text) throws Throwable {
-        WebElement todoList = getWebDriver().findElement(By.id("todo-list"));
-        item = todoList.findElement(By.cssSelector("li"));
-        WebElement checkbox = item.findElement(By.cssSelector("input[type='checkbox']"));
-        checkbox.click();
-        checkbox = item.findElement(By.cssSelector("input[type='checkbox']"));
+    public void I_mark_item_as_done(String label) throws Throwable {
+        WebElement checkbox = page.findAndClickCheckbox(label);
+        WebElement item = page.findItem(label);
 
         assertThat(checkbox.getAttribute("checked"), is("true"));
         assertThat(item.getAttribute("className"), is("done"));
@@ -98,12 +84,11 @@ public class Steps {
     }
 
     @When("^I double click on \"([^\"]*)\" item$")
-    public void I_double_click_on_item(String text) throws Throwable {
-        String xpath = String.format("//label[text()[contains(.,'%s')]]", text);
-        WebElement label = getWebDriver().findElement(By.xpath(xpath));
+    public void I_double_click_on_item(String label) throws Throwable {
+        // String xpath = String.format("//label[text()[contains(.,'%s')]]", text);
+        // WebElement label = getWebDriver().findElement(By.xpath(xpath));
 
-        Actions actions = new Actions(getWebDriver());
-        actions.doubleClick(label).build().perform();
+        page.performDoubleClickOnItem(label);
     }
 
     @When("^I replace \"([^\"]*)\" item label with \"([^\"]*)\"$")
@@ -120,7 +105,7 @@ public class Steps {
         WebElement label = null;
 
         try {
-            label = getWebDriver().findElement(By.xpath(xpath));
+            // label = getWebDriver().findElement(By.xpath(xpath));
         } catch (RuntimeException e) {
             // Nothing
         }
