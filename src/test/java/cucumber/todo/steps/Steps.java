@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class Steps {
     private WebElement textField;
+    private WebElement item;
 
     @Given("^I am on the To-Do page$")
     public void I_am_on_the_To_Do_page() throws Throwable {
@@ -50,6 +51,29 @@ public class Steps {
 
         assertTrue(element.isDisplayed());
         assertThat(element.getText(), is(text));
+    }
+
+    @Given("^I have created \"([^\"]*)\" item$")
+    public void I_have_created_item(String text) throws Throwable {
+        I_am_on_the_To_Do_page();
+        I_fill_in_with("new-todo", text);
+    }
+
+    @When("^I \"([^\"]*)\" item as done$")
+    public void I_item_as_done(String text) throws Throwable {
+        WebElement todoList = getWebDriver().findElement(By.id("todo-list"));
+        item = todoList.findElement(By.cssSelector("li"));
+        WebElement checkbox = item.findElement(By.cssSelector("input[type='checkbox']"));
+        checkbox.click();
+        checkbox = item.findElement(By.cssSelector("input[type='checkbox']"));
+
+        assertThat(checkbox.getAttribute("checked"), is("true"));
+        assertThat(item.getAttribute("className"), is("done"));
+    }
+
+    @Then("^I should see done \"([^\"]*)\" item$")
+    public void I_should_see_done_item(String arg1) throws Throwable {
+        assertThat(item.getAttribute("className"), is("done"));
     }
 
 }
