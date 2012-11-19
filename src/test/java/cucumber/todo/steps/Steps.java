@@ -5,8 +5,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.todo.ToDoPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -20,6 +20,8 @@ import static org.junit.Assert.assertTrue;
 
 public class Steps {
     private WebDriver webDriver;
+    private ToDoPage page;
+
 
     private WebElement textField;
     private WebElement item;
@@ -27,65 +29,52 @@ public class Steps {
     @Before
     public void setUpScenario() throws Exception {
         webDriver = new FirefoxDriver();
+        page = new ToDoPage(webDriver);
     }
 
     @After
     public void tearDownScenario() {
-        webDriver.close();
+        page.close();
     }
 
     public WebDriver getWebDriver() {
         return webDriver;
     }
 
-
     @Given("^I am on the To-Do page$")
     public void I_am_on_the_To_Do_page() throws Throwable {
-        getWebDriver().get(getBaseUrl());
+        page.open(getBaseUrl());
     }
 
-    @When("^I fill in \"([^\"]*)\" with \"([^\"]*)\"$")
-    public void I_fill_in_with(String locator, String text) throws Throwable {
-        // Ugly code section
-        try {
-            textField = getWebDriver().findElement(By.id(locator));
-        } catch (RuntimeException e) {
-            textField = getWebDriver().findElement(By.className(locator));
-        }
-
-        assertTrue(textField.isDisplayed());
-
-        textField.clear();
-        textField.sendKeys(text);
+    @When("^I fill in new todo with \"([^\"]*)\"$")
+    public void I_fill_in_new_todo_with(String label) throws Throwable {
+        page.fillInNewItem(label);
     }
 
-    @When("^I press \"([^\"]*)\"$")
-    public void I_press(String key) throws Throwable {
-        textField.sendKeys(Keys.valueOf(key.toUpperCase()));
+    @When("^I press Return$")
+    public void I_press_return() throws Throwable {
+        page.pressReturnOnNewItem();
     }
 
     @Then("^I should see \"([^\"]*)\" item$")
-    public void I_should_see(String text) throws Throwable {
-        WebElement todoList = getWebDriver().findElement(By.id("todo-list"));
-        WebElement item = todoList.findElement(By.cssSelector(".view label"));
+    public void I_should_see_item(String label) throws Throwable {
+        WebElement item = page.findItem(label);
 
         assertTrue(item.isDisplayed());
-        assertThat(item.getText(), is(text));
     }
 
-    @Then("^I should see \"([^\"]*)\" in the \"([^\"]*)\" block$")
-    public void I_should_see_in_the_block(String text, String locator) throws Throwable {
-        WebElement element = getWebDriver().findElement(By.className(locator));
+    @Then("^I should see \"([^\"]*)\"$")
+    public void I_should_see(String text) throws Throwable {
+        WebElement item = page.findByText(text);
 
-        assertTrue(element.isDisplayed());
-        assertThat(element.getText(), is(text));
+        assertTrue(item.isDisplayed());
     }
 
     @Given("^I have created \"([^\"]*)\" item$")
-    public void I_have_created_item(String text) throws Throwable {
+    public void I_have_created_item(String label) throws Throwable {
         I_am_on_the_To_Do_page();
-        I_fill_in_with("new-todo", text);
-        I_press("Return");
+        I_fill_in_new_todo_with(label);
+        I_press_return();
     }
 
     @When("^I mark \"([^\"]*)\" item as done$")
@@ -100,8 +89,11 @@ public class Steps {
         assertThat(item.getAttribute("className"), is("done"));
     }
 
-    @Then("^I should see done \"([^\"]*)\" item$")
-    public void I_should_see_done_item(String arg1) throws Throwable {
+    @Then("^I should see completed \"([^\"]*)\" item$")
+    public void I_should_see_completed_item(String label) throws Throwable {
+        WebElement item = page.findItem(label);
+
+        assertTrue(item.isDisplayed());
         assertThat(item.getAttribute("className"), is("done"));
     }
 
@@ -112,6 +104,11 @@ public class Steps {
 
         Actions actions = new Actions(getWebDriver());
         actions.doubleClick(label).build().perform();
+    }
+
+    @When("^I replace \"([^\"]*)\" item label with \"([^\"]*)\"$")
+    public void I_replace_item_label_with(String oldLabel, String newLabel) throws Throwable {
+        page.findAndEditItemField(oldLabel, newLabel);
     }
 
     @Then("^I should not see \"([^\"]*)\" item$")

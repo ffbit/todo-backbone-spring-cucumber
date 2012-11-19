@@ -5,22 +5,22 @@ Feature: Managing To-Do items
 
   Scenario: Create a To-Do item
     Given I am on the To-Do page
-    When I fill in "new-todo" with "Make all the people happy"
-    And I press "Return"
+    When I fill in new todo with "Make all the people happy"
+    And I press Return
     Then I should see "Make all the people happy" item
-    And I should see "1 item left" in the "todo-count" block
+    And I should see "1 item left"
 
   Scenario: Complete a To-Do item
     Given I have created "Make all the people happy" item
     When I mark "Make all the people happy" item as done
-    Then I should see done "Make all the people happy" item
-    And I should see "0 items left" in the "todo-count" block
+    Then I should see completed "Make all the people happy" item
+    And I should see "0 items left"
 
   Scenario: Edit an existing To-Do item
     Given I have created "Make all the people happy" item
     When I double click on "Make all the people happy" item
-    And I fill in "edit" with "Feed all kitties"
-    And I press "Return"
+    And I replace "Make all the people happy" item label with "Feed all kitties"
+    And I press Return
     Then I should see "Feed all kitties" item
     And I should not see "Make all the people happy" item
-    And I should see "1 item left" in the "todo-count" block
+    And I should see "1 item left"
