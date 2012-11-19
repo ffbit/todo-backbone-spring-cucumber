@@ -19,7 +19,8 @@ Feature: Managing To-Do items
   Scenario: Edit an existing To-Do item
     Given I have created "Make all the people happy" item
     When I double click on "Make all the people happy" item
-    # And I fill in "edit" with "Feed all kitties"
+    And I fill in "edit" with "Feed all kitties"
+    And I press "Return"
     Then I should see "Feed all kitties" item
     And I should not see "Make all the people happy" item
     And I should see "1 item left" in the "todo-count" block

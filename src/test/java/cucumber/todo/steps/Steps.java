@@ -7,12 +7,12 @@ import cucumber.runtime.PendingException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 
 import static cucumber.todo.RunCukesIT.getBaseUrl;
 import static cucumber.todo.RunCukesIT.getWebDriver;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -27,10 +27,16 @@ public class Steps {
 
     @When("^I fill in \"([^\"]*)\" with \"([^\"]*)\"$")
     public void I_fill_in_with(String locator, String text) throws Throwable {
-        textField = getWebDriver().findElement(By.id(locator));
+        // Ugly code section
+        try {
+            textField = getWebDriver().findElement(By.id(locator));
+        } catch (RuntimeException e) {
+            textField = getWebDriver().findElement(By.className(locator));
+        }
 
         assertTrue(textField.isDisplayed());
 
+        textField.clear();
         textField.sendKeys(text);
     }
 
@@ -60,6 +66,7 @@ public class Steps {
     public void I_have_created_item(String text) throws Throwable {
         I_am_on_the_To_Do_page();
         I_fill_in_with("new-todo", text);
+        I_press("Return");
     }
 
     @When("^I mark \"([^\"]*)\" item as done$")
@@ -85,13 +92,23 @@ public class Steps {
         WebElement label = getWebDriver().findElement(By.xpath(xpath));
 
         Actions actions = new Actions(getWebDriver());
-        actions.doubleClick(item);
-        actions.perform();
+        actions.doubleClick(label).build().perform();
     }
 
     @Then("^I should not see \"([^\"]*)\" item$")
-    public void I_should_not_see_item(String arg1) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    public void I_should_not_see_item(String text) throws Throwable {
+        String xpath = String.format("//label[text()[contains(.,'%s')]]", text);
+
+        // Ugly code section
+        // Think about expected property of JUnit @Test
+        WebElement label = null;
+
+        try {
+            label = getWebDriver().findElement(By.xpath(xpath));
+        } catch (RuntimeException e) {
+            // Nothing
+        }
+
+        assertThat(label, is(nullValue()));
     }
 }

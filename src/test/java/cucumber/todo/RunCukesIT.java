@@ -6,6 +6,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -22,8 +23,13 @@ public class RunCukesIT {
     private static WebDriver webDriver;
 
     @BeforeClass
-    public static void setUp() throws Exception {
+    public static void setUpClass() throws Exception {
         setUpServer();
+        setUpWebDriver();
+    }
+
+    @Before
+    public void setUp() throws Exception {
         setUpWebDriver();
     }
 
@@ -48,7 +54,7 @@ public class RunCukesIT {
     }
 
     @AfterClass
-    public static void tearDown() throws Exception {
+    public static void tearDownClass() throws Exception {
         getWebDriver().close();
         server.stop();
     }
