@@ -3,9 +3,12 @@ package cucumber.todo.steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.runtime.PendingException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 
 import static cucumber.todo.RunCukesIT.getBaseUrl;
 import static cucumber.todo.RunCukesIT.getWebDriver;
@@ -76,4 +79,19 @@ public class Steps {
         assertThat(item.getAttribute("className"), is("done"));
     }
 
+    @When("^I double click on \"([^\"]*)\" item$")
+    public void I_double_click_on_item(String text) throws Throwable {
+        String xpath = String.format("//label[text()[contains(.,'%s')]]", text);
+        WebElement label = getWebDriver().findElement(By.xpath(xpath));
+
+        Actions actions = new Actions(getWebDriver());
+        actions.doubleClick(item);
+        actions.perform();
+    }
+
+    @Then("^I should not see \"([^\"]*)\" item$")
+    public void I_should_not_see_item(String arg1) throws Throwable {
+        // Express the Regexp above with the code you wish you had
+        throw new PendingException();
+    }
 }

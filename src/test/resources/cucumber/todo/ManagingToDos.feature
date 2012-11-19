@@ -15,3 +15,11 @@ Feature: Managing To-Do items
     When I mark "Make all the people happy" item as done
     Then I should see done "Make all the people happy" item
     And I should see "0 items left" in the "todo-count" block
+
+  Scenario: Edit an existing To-Do item
+    Given I have created "Make all the people happy" item
+    When I double click on "Make all the people happy" item
+    # And I fill in "edit" with "Feed all kitties"
+    Then I should see "Feed all kitties" item
+    And I should not see "Make all the people happy" item
+    And I should see "1 item left" in the "todo-count" block
