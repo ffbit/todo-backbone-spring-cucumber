@@ -6,16 +6,13 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.todo.ToDoPage;
-import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
 
 import static cucumber.todo.RunCukesIT.getBaseUrl;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class Steps {
     private ToDoPage page;
@@ -68,7 +65,7 @@ public class Steps {
 
     @When("^I mark \"([^\"]*)\" item as done$")
     public void I_mark_item_as_done(String label) throws Throwable {
-        WebElement checkbox = page.findAndClickCheckbox(label);
+        WebElement checkbox = page.findAndClickOnItemCheckbox(label);
         WebElement item = page.findItem(label);
 
         assertThat(checkbox.getAttribute("checked"), is("true"));
@@ -85,9 +82,6 @@ public class Steps {
 
     @When("^I double click on \"([^\"]*)\" item$")
     public void I_double_click_on_item(String label) throws Throwable {
-        // String xpath = String.format("//label[text()[contains(.,'%s')]]", text);
-        // WebElement label = getWebDriver().findElement(By.xpath(xpath));
-
         page.performDoubleClickOnItem(label);
     }
 
@@ -97,19 +91,13 @@ public class Steps {
     }
 
     @Then("^I should not see \"([^\"]*)\" item$")
-    public void I_should_not_see_item(String text) throws Throwable {
-        String xpath = String.format("//label[text()[contains(.,'%s')]]", text);
-
-        // Ugly code section
-        // Think about expected property of JUnit @Test
-        WebElement label = null;
-
+    public void I_should_not_see_item(String label) throws Throwable {
         try {
-            // label = getWebDriver().findElement(By.xpath(xpath));
-        } catch (RuntimeException e) {
+            page.findItem(label);
+            fail("to-do item with <" + label + "> is present.");
+        } catch (NoSuchElementException e) {
             // Nothing
         }
-
-        assertThat(label, is(nullValue()));
     }
+
 }

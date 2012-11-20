@@ -46,7 +46,7 @@ public class ToDoPage {
         return driver.findElement(By.xpath(xpath));
     }
 
-    public WebElement findAndClickCheckbox(String label) {
+    public WebElement findAndClickOnItemCheckbox(String label) {
         By by = By.cssSelector("input[type='checkbox']");
         WebElement checkbox = findItem(label).findElement(by);
         checkbox.click();
