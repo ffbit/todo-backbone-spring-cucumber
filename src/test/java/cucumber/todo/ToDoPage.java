@@ -1,12 +1,12 @@
 package cucumber.todo;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
-import java.util.concurrent.TimeUnit;
 
 public class ToDoPage {
     private WebDriver driver;
@@ -76,6 +76,15 @@ public class ToDoPage {
         By by = By.cssSelector("input.edit[type='text']");
 
         return findItem(oldLabel).findElement(by);
+    }
+
+    public void destroyItem(String label) {
+        WebElement item = findItem(label);
+
+        // Actions hover = new Actions(driver);
+        // hover.moveToElement(item).build().perform();
+
+        findItem(label).findElement(By.cssSelector("a.destroy")).click();
     }
 
 }

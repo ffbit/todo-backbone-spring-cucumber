@@ -87,7 +87,7 @@ body {
 	position: absolute;
 	right: 5px;
 	top: 20px;
-	display: none;
+	/*display: none;*/
 	cursor: pointer;
 	width: 20px;
 	height: 20px;

@@ -100,4 +100,15 @@ public class Steps {
         }
     }
 
+    @Given("^I have completed \"([^\"]*)\" item$")
+    public void I_have_completed_item(String label) throws Throwable {
+        I_have_created_item(label);
+        I_mark_item_as_done(label);
+    }
+
+    @When("^I destroy \"([^\"]*)\" item$")
+    public void I_destroy_item(String label) throws Throwable {
+        page.destroyItem(label);
+    }
+
 }

@@ -24,3 +24,8 @@ Feature: Managing To-Do items
     Then I should see "Feed all kitties" item
     And I should not see "Make all the people happy" item
     And I should see "1 item left"
+
+  Scenario: Delete an a completed To-Do item
+    Given I have completed "Make all the people happy" item
+    When I destroy "Make all the people happy" item
+    Then I should not see "Make all the people happy" item
