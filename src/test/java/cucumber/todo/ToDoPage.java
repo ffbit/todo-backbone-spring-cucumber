@@ -65,8 +65,11 @@ public class ToDoPage {
     }
 
     public void performDoubleClickOnItem(String label) {
+        WebElement item = findItem(label);
+        WebElement labelElement = item.findElement(By.tagName("label"));
+
         Actions actions = new Actions(driver);
-        actions.doubleClick(findItem(label)).build().perform();
+        actions.doubleClick(labelElement).build().perform();
     }
 
     private WebElement findEditItemField(String oldLabel) {
