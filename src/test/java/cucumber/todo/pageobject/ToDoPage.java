@@ -1,4 +1,4 @@
-package cucumber.todo;
+package cucumber.todo.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

@@ -1,11 +1,11 @@
-package cucumber.todo.steps;
+package cucumber.todo.stepdefinition;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.todo.ToDoPage;
+import cucumber.todo.pageobject.ToDoPage;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class Steps {
+public class ToDoSteps {
     private ToDoPage page;
 
     @Before
