@@ -6,7 +6,7 @@ Feature: Managing To-Do items
   Scenario: Create a To-Do item
     Given I am on the To-Do page
     When  I fill in new todo with "Make all the people happy"
-    And   I press Return
+    And   I press Enter
     Then  I should see "Make all the people happy" item
     And   I should see "1 item left"
 
@@ -20,7 +20,7 @@ Feature: Managing To-Do items
     Given I have created "Make all the people happy" item
     When  I double click on "Make all the people happy" item
     And   I replace "Make all the people happy" item label with "Feed all kitties"
-    And   I press Return
+    And   I press Enter
     Then  I should see "Feed all kitties" item
     And   I should not see "Make all the people happy" item
     And   I should see "1 item left"

@@ -39,8 +39,8 @@ public class Steps {
         page.fillInNewItem(label);
     }
 
-    @When("^I press Return$")
-    public void I_press_return() throws Throwable {
+    @When("^I press Enter$")
+    public void I_press_enter() throws Throwable {
         page.pressReturnOnNewItem();
     }
 
@@ -62,7 +62,7 @@ public class Steps {
     public void I_have_created_item(String label) throws Throwable {
         I_am_on_the_To_Do_page();
         I_fill_in_new_todo_with(label);
-        I_press_return();
+        I_press_enter();
     }
 
     @When("^I mark \"([^\"]*)\" item as done$")
@@ -98,7 +98,7 @@ public class Steps {
             page.findItem(label);
             fail("to-do item with <" + label + "> is present.");
         } catch (NoSuchElementException e) {
-            throw e;
+            // Do nothing
         }
     }
 
