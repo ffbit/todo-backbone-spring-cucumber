@@ -94,8 +94,7 @@ body {
 	background: url(destroy.png) no-repeat;
 }
 
-#todo-list li:hover .destroy,
-#todo-list li:focus .destroy {
+#todo-list li:hover .destroy {
   	display: block;
 }
 

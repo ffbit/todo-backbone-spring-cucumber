@@ -12,7 +12,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static cucumber.todo.RunCukesIT.getBaseUrl;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class Steps {
     private ToDoPage page;
@@ -96,7 +98,7 @@ public class Steps {
             page.findItem(label);
             fail("to-do item with <" + label + "> is present.");
         } catch (NoSuchElementException e) {
-            // Nothing
+            throw e;
         }
     }
 
@@ -106,9 +108,9 @@ public class Steps {
         I_mark_item_as_done(label);
     }
 
-    @When("^I destroy \"([^\"]*)\" item$")
-    public void I_destroy_item(String label) throws Throwable {
-        page.destroyItem(label);
+    @When("^I click on \"([^\"]*)\"$")
+    public void I_click_on(String label) throws Throwable {
+        page.clickOnLink(label);
     }
 
 }
