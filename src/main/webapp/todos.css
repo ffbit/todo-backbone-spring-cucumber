@@ -87,14 +87,15 @@ body {
 	position: absolute;
 	right: 5px;
 	top: 20px;
-	/*display: none;*/
+	display: none;
 	cursor: pointer;
 	width: 20px;
 	height: 20px;
 	background: url(destroy.png) no-repeat;
 }
 
-#todo-list li:hover .destroy {
+#todo-list li:hover .destroy,
+#todo-list li:focus .destroy {
   	display: block;
 }
 
