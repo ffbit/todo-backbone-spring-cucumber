@@ -1,8 +1,9 @@
 # Cucumber, Spring Framework and Backbone.JS todo example
 
-## Goal
-
-Test Backbone.JS todo example with Cucumber and shared Spring transactions.
+The goal of this project is to test [Backbone.JS todo example]
+(http://documentcloud.github.com/backbone/examples/todos/index.html)
+with [Cucumber](http://cukes.info/) and shared [Spring JPA]
+(http://www.springsource.org/spring-data/jpa) datase transactions.
 
 ## How to run web application
 
@@ -11,4 +12,6 @@ Test Backbone.JS todo example with Cucumber and shared Spring transactions.
 
 ## How to test
 
-Will be written after achieving the goal.
+1. Install [Apache Maven](http://maven.apache.org/)
+2. Install [Mozilla Firefox](http://www.mozilla.org/firefox/new/) web browser
+3. Run `mvn clean integration-test`
