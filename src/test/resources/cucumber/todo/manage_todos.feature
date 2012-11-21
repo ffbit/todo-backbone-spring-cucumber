@@ -1,3 +1,4 @@
+@web
 Feature: Managing To-Do items
   In order to be successful in my business
   As a very busy human being

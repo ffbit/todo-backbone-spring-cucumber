@@ -10,7 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static cucumber.todo.RunCukesIT.getBaseUrl;
+import static cucumber.todo.hook.JettyRunner.getBaseUrl;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
