@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 public class JettyRunner {
     private static Logger log = LoggerFactory.getLogger(JettyRunner.class);
 
+    private final String tags = "@web";
+
     private static Server server;
     private static Connector connector;
 
-    @Before("@web")
+    @Before(tags)
     public void setUpJetty() throws Exception {
         setUpServer();
     }
@@ -40,7 +42,7 @@ public class JettyRunner {
         return String.format("http://localhost:%d/", connector.getLocalPort());
     }
 
-    @After
+    @After(tags)
     public void tearDownJetty() throws Exception {
         server.stop();
     }
