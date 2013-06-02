@@ -15,6 +15,7 @@
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <cucumber.version>1.1.1</cucumber.version>
         <hibernate.version>4.2.2.Final</hibernate.version>
+        <jackson.version>1.9.12</jackson.version>
         <jetty.version>8.1.11.v20130520</jetty.version>
         <junit.version>4.10</junit.version>
         <org.slf4j.version>1.7.5</org.slf4j.version>
@@ -127,6 +128,13 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring.data.jpa.version}</version>
+        </dependency>
+
+        <!-- Jackson JSON Processor -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Testing -->
