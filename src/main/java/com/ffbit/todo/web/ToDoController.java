@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -16,6 +17,12 @@ public class ToDoController {
     @ResponseBody
     public List<?> index() {
         return Collections.emptyList();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    public Object create() {
+        return Collections.emptyMap();
     }
 
 }
