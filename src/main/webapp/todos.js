@@ -21,6 +21,8 @@ $(function(){
       };
     },
 
+    idAttribute: "id",
+
     // Ensure that each todo created has `title`.
     initialize: function() {
       if (!this.get("title")) {
