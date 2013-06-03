@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ToDoPage {
+    private final int timeOutInSeconds = 5;
     private WebDriver driver;
 
     public ToDoPage(WebDriver driver) {
         this.driver = driver;
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(timeOutInSeconds, TimeUnit.SECONDS);
     }
 
     public void open(String url) {
@@ -74,6 +75,7 @@ public class ToDoPage {
 
     public WebElement findAndClickOnItemCheckbox(String label) {
         By by = By.cssSelector("input[type='checkbox']");
+        wait(by);
         WebElement checkbox = findItem(label).findElement(by);
         checkbox.click();
         checkbox = findItem(label).findElement(by);
@@ -97,6 +99,7 @@ public class ToDoPage {
 
     private WebElement findEditItemField(String oldLabel) {
         By by = By.cssSelector("input.edit[type='text']");
+        wait(by);
 
         return findItem(oldLabel).findElement(by);
     }
@@ -106,7 +109,7 @@ public class ToDoPage {
     }
 
     private void wait(By selector) {
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
         wait.until(ExpectedConditions.visibilityOfElementLocated(selector));
     }
 
