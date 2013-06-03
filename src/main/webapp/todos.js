@@ -32,7 +32,6 @@ $(function(){
 
     // Toggle the `done` state of this todo item.
     toggle: function() {
-      delete this.attributes['new'];
       this.save({done: !this.get("done")});
     }
 
