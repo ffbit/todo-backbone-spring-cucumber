@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ToDoPage {
@@ -53,6 +54,13 @@ public class ToDoPage {
         wait(selector);
 
         return driver.findElement(selector);
+    }
+
+    public List<WebElement> findItems(String label) {
+        String xpath = String
+                .format("//label[contains(., '%s')]/ancestor::li[1]", label);
+
+        return driver.findElements(By.xpath(xpath));
     }
 
     public WebElement findByText(String text) {

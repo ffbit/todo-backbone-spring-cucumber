@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static cucumber.todo.hook.JettyRunner.getBaseUrl;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -94,12 +95,7 @@ public class ToDoSteps {
 
     @Then("^I should not see \"([^\"]*)\" item$")
     public void I_should_not_see_item(String label) throws Throwable {
-        try {
-            page.findItem(label);
-            fail("to-do item with <" + label + "> is present.");
-        } catch (NoSuchElementException e) {
-            // Do nothing
-        }
+        assertThat(page.findItems(label), is(empty()));
     }
 
     @Given("^I have completed \"([^\"]*)\" item$")
