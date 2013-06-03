@@ -11,11 +11,11 @@ Feature: Manage To-Do items
     Then  I should see "Make all the people happy" item
     And   I should see "1 item left"
 
-  Scenario: Complete a To-Do item
-    Given I have created "Make all the people happy" item
-    When  I mark "Make all the people happy" item as done
-    Then  I should see completed "Make all the people happy" item
-    And   I should see "0 items left"
+#  Scenario: Complete a To-Do item
+#    Given I have created "Make all the people happy" item
+#    When  I mark "Make all the people happy" item as done
+#    Then  I should see completed "Make all the people happy" item
+#    And   I should see "0 items left"
 
   Scenario: Edit an existing To-Do item
     Given I have created "Make all the people happy" item
