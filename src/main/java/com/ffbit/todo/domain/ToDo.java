@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "todos")
+@Table(name = "todos", schema = "sa")
 @Access(AccessType.PROPERTY)
 public class ToDo extends AbstractPersistable<Integer> {
     private String title;

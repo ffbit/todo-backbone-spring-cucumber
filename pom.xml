@@ -265,6 +265,24 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>src/main/resources/jdbc.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.carlspring.maven</groupId>
                 <artifactId>derby-maven-plugin</artifactId>
                 <version>1.5</version>
@@ -276,9 +294,9 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <port>1527</port>
-                    <username>user=jill</username>
-                    <password>toFetchAPail</password>
+                    <port>${database.port}</port>
+                    <username>${database.user}</username>
+                    <password>${database.password}</password>
                 </configuration>
                 <executions>
                     <execution>
