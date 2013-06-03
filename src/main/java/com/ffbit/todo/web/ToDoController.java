@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/todos")
+@Transactional
 public class ToDoController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -55,10 +57,17 @@ public class ToDoController {
         logger.info("update todo: {} {}", id, todo);
 
         if (repository.exists(id)) {
+            ToDo existent = repository.findOne(id);
 
+            existent.setTitle(todo.getTitle());
+            existent.setOrder(todo.getOrder());
+            existent.setDone(todo.getDone());
+
+            repository.save(existent);
+
+            logger.info("updated todo: {} {}", id, existent);
+            return existent;
         }
-
-        logger.info("updated todo: {} {}", id, todo);
 
         return todo;
     }
