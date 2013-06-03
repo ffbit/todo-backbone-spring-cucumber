@@ -50,7 +50,8 @@ public class ToDoPage {
 
     public WebElement findItem(String label) {
         String xpath = String
-                .format("//label[contains(., '%s')]/ancestor::li[1]", label);
+                .format("//li[contains(.,'%s')]", label);
+        ////label[contains(.,'%s')]
         By selector = By.xpath(xpath);
         wait(selector);
 
