@@ -5,12 +5,18 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class ToDoPage {
     private WebDriver driver;
 
     public ToDoPage(WebDriver driver) {
         this.driver = driver;
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     public void open(String url) {
@@ -25,25 +31,37 @@ public class ToDoPage {
         findNewItemField().sendKeys(label);
     }
 
-    public void pressReturnOnNewItem() {
-        findNewItemField().sendKeys(Keys.RETURN);
+    public void pressReturnOnCurrentItem() {
+        findCurrentInputField().sendKeys(Keys.RETURN);
     }
 
     private WebElement findNewItemField() {
         return driver.findElement(By.id("new-todo"));
     }
 
+    private WebElement findCurrentInputField() {
+        By selector = By.cssSelector("input:focus");
+        wait(selector);
+
+        return driver.findElement(selector);
+    }
+
     public WebElement findItem(String label) {
         String xpath = String
                 .format("//label[contains(., '%s')]/ancestor::li[1]", label);
+        By selector = By.xpath(xpath);
+        wait(selector);
 
-        return driver.findElement(By.xpath(xpath));
+        return driver.findElement(selector);
     }
 
     public WebElement findByText(String text) {
         String xpath = String.format("//*[contains(., '%s')]", text);
+        By selector = By.xpath(xpath);
 
-        return driver.findElement(By.xpath(xpath));
+        wait(selector);
+
+        return driver.findElement(selector);
     }
 
     public WebElement findAndClickOnItemCheckbox(String label) {
@@ -78,4 +96,10 @@ public class ToDoPage {
     public void clickOnLink(String label) {
         driver.findElement(By.partialLinkText(label)).click();
     }
+
+    private void wait(By selector) {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(selector));
+    }
+
 }

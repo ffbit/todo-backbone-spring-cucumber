@@ -41,7 +41,7 @@ public class ToDoSteps {
 
     @When("^I press Enter$")
     public void I_press_enter() throws Throwable {
-        page.pressReturnOnNewItem();
+        page.pressReturnOnCurrentItem();
     }
 
     @Then("^I should see \"([^\"]*)\" item$")
