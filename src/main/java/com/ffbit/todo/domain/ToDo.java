@@ -1,5 +1,6 @@
 package com.ffbit.todo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Access;
@@ -12,8 +13,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "todos")
+@Table(name = "todos", schema = "sa")
 @Access(AccessType.PROPERTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ToDo extends AbstractPersistable<Integer> {
     private String title;
     private Integer order;
