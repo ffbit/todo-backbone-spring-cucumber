@@ -272,11 +272,19 @@
                 </dependencies>
                 <executions>
                     <execution>
+                        <id>Spawn a new H2 Database TCP Server</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>
                                 spawn
                             </goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>Stop the Spawned H2 Database TCP Server</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
                         </goals>
                     </execution>
                 </executions>
