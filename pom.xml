@@ -14,7 +14,7 @@
 
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <cucumber.version>1.1.1</cucumber.version>
-        <h2.version>1.3.172</h2.version>
+        <derby.version>10.10.1.1</derby.version>
         <hibernate.version>4.2.2.Final</hibernate.version>
         <jackson.version>1.9.12</jackson.version>
         <jetty.version>8.1.11.v20130520</jetty.version>
@@ -34,9 +34,14 @@
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${derby.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>${derby.version}</version>
         </dependency>
 
         <!-- DataBase Connection Pool -->
@@ -260,28 +265,31 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.edugility</groupId>
-                <artifactId>h2-maven-plugin</artifactId>
-                <version>1.0</version>
+                <groupId>org.carlspring.maven</groupId>
+                <artifactId>derby-maven-plugin</artifactId>
+                <version>1.5</version>
                 <dependencies>
                     <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
+                        <groupId>org.apache.derby</groupId>
+                        <artifactId>derby</artifactId>
+                        <version>${derby.version}</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <port>1527</port>
+                    <username>user=jill</username>
+                    <password>toFetchAPail</password>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>Spawn a new H2 Database TCP Server</id>
+                        <id>start-derby</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>
-                                spawn
-                            </goal>
+                            <goal>start</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>Stop the Spawned H2 Database TCP Server</id>
+                        <id>stop-derby</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>stop</goal>
