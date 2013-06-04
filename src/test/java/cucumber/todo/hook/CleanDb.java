@@ -2,18 +2,32 @@ package cucumber.todo.hook;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import org.aeonbits.owner.Config;
+import org.aeonbits.owner.ConfigFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-public class CleanDb {
-    private String driverClass = "org.apache.derby.jdbc.EmbeddedDriver";
-    private String connectionUrl = "jdbc:derby://localhost:1527/todos;create=true";
-    private String username = "sa";
-    private String password = "sa";
+import static org.aeonbits.owner.Config.Sources;
 
+public class CleanDb {
     private Connection connection;
+
+    @Sources("classpath:jdbc.properties")
+    private interface JdbcConfig extends Config {
+        @Key("database.driver")
+        String getDriverClass();
+
+        @Key("database.url")
+        String getConnectionUrl();
+
+        @Key("database.user")
+        String getUsername();
+
+        @Key("database.password")
+        String getPassword();
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -24,13 +38,16 @@ public class CleanDb {
     }
 
     private void registerDriver() throws Exception {
-        Class.forName(driverClass).newInstance();
+
     }
 
     private void initConnection() throws Exception {
+        JdbcConfig cfg = ConfigFactory.create(JdbcConfig.class);
+
+        Class.forName(cfg.getDriverClass()).newInstance();
         connection = DriverManager
                 .getConnection(String.format("%s;username=%s;password=%s",
-                        connectionUrl, username, password));
+                        cfg.getConnectionUrl(), cfg.getUsername(), cfg.getPassword()));
     }
 
     private void executeUpdate(String sql) throws Exception {
