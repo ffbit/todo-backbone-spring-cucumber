@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -43,20 +45,23 @@ public class ToDoController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Object create(@RequestBody ToDo todo) {
-        logger.info("create {}", todo);
-        repository.save(todo);
-        logger.info("created {}", todo);
+    public Object create(@Valid @RequestBody ToDo todo, BindingResult result) {
+        if (!result.hasErrors()) {
+            logger.info("create {}", todo);
+            repository.save(todo);
+            logger.info("created {}", todo);
+        }
 
         return todo;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public ToDo update(@RequestBody ToDo todo, @PathVariable Integer id) {
+    public ToDo update(@Valid @RequestBody ToDo todo,
+                       BindingResult result, @PathVariable Integer id) {
         logger.info("update todo: {} {}", id, todo);
 
-        if (repository.exists(id)) {
+        if (!result.hasErrors() && repository.exists(id)) {
             ToDo existent = repository.findOne(id);
 
             existent.setTitle(todo.getTitle());
