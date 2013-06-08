@@ -15,3 +15,7 @@ with [Cucumber](http://cukes.info/) and shared [Spring JPA]
 1. Install [Apache Maven](http://maven.apache.org/)
 2. Install [Mozilla Firefox](http://www.mozilla.org/firefox/new/) web browser
 3. Run `mvn clean integration-test`
+
+## Status
+
+Unstable
